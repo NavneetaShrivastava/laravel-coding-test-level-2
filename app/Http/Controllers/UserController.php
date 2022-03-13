@@ -6,13 +6,12 @@ use App\Http\Requests\User\UpdateUser;
 use App\Http\Requests\User\StoreUser;
 use App\Http\Requests\User\PatchUser;
 use App\Models\User;
-use Exception;
 
 class UserController extends Controller
 {
     public function index()
     {
-        return User::orderBy('created_at', 'asc')->get(); 
+        return User::orderBy('created_at', 'asc')->get();
     }
 
     public function store(StoreUser $form)
@@ -25,34 +24,30 @@ class UserController extends Controller
         try {
             $user = User::findorFail($id);
             return $user;
-        } 
-        catch (Exception $e) {
-           return "User not Found";
+        } catch (\Exception $e) {
+            return "User not Found";
         }
     }
 
-    public function update(string $id, UpdateUser $form )
+    public function update(string $id, UpdateUser $form)
     {
-        $form->persist($id);
-        return 'User updated Successfully';
+        return response()->json($form->persist($id));
     }
 
-    public function patch(string $id, PatchUser $form )
+    public function patch(string $id, PatchUser $form)
     {
-        $form->persist($id);
-        return 'User patched Successfully';
+        return response()->json($form->persist($id));
     }
 
     public function destroy(string $id)
     {
-        try {
-            $user = User::findorFail($id); 
-            if($user->delete()){ 
-                return 'deleted successfully'; 
-            }
-        } 
-        catch (Exception $e) {
-           return "User not Found";
+        $user = User::findorFail($id);
+        if ($user->delete()) {
+            return 'deleted successfully';
         }
+        return response()->json([
+            'message' => 'User deleted successfully',
+            'statusCode' => 201
+        ], 201);
     }
 }

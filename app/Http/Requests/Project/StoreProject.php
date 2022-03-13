@@ -30,8 +30,18 @@ class StoreProject extends FormRequest
 
     public function persist()
     {
-        return ModelProject::create(Request::all());
+        try {
+            $project = ModelProject::create(Request::all());
+            return response()->json([
+                'message' => 'Project created successfully',
+                'statusCode' => 201,
+                'data' => $project
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' =>  $e->getMessage(),
+                'statusCode' => 417
+            ], 417);
+        }
     }
-
-    
 }

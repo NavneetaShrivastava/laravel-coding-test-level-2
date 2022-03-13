@@ -12,7 +12,7 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        return Project::orderBy('created_at', 'asc')->get(); 
+        return Project::orderBy('created_at', 'asc')->get();
     }
 
     public function store(StoreProject $form)
@@ -26,27 +26,25 @@ class ProjectController extends Controller
             $project = Project::findorFail($id);
             return $project;
         } catch (Exception $e) {
-           return 'Project Not Found';
+            return 'Project Not Found';
         }
     }
 
-    public function update(string $id, UpdateProject $form )
+    public function update(string $id, UpdateProject $form)
     {
-        $form->persist($id);
-        return 'Project updated Successfully';
+        return response()->json($form->persist($id));
     }
 
-    public function patch(string $id, PatchProject $form )
+    public function patch(string $id, PatchProject $form)
     {
-        $form->persist($id);
-        return 'Project patched Successfully';
+        return response()->json($form->persist($id));
     }
 
     public function destroy(string $id)
     {
-       $Project = Project::findorFail($id); 
-        if($Project->delete()){ 
-            return 'deleted successfully'; 
+        $Project = Project::findorFail($id);
+        if ($Project->delete()) {
+            return 'deleted successfully';
         }
     }
 }
