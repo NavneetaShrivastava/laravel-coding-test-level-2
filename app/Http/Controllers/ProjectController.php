@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Project\UpdateProject;
 use App\Http\Requests\Project\StoreProject;
 use App\Http\Requests\Project\PatchProject;
+use App\Http\Requests\Project\IndexProject;
 use App\Models\Project;
 use Exception;
 
 class ProjectController extends Controller
 {
-    public function index()
+    public function index(IndexProject $form)
     {
-        return Project::orderBy('created_at', 'asc')->get();
+        return response()->json($form->data());
     }
 
     public function store(StoreProject $form)
