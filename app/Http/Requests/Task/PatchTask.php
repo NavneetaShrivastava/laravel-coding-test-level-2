@@ -39,7 +39,7 @@ class PatchTask extends FormRequest
         try {
             $task = ModelTask::findOrFail($id);
 
-            if( Request::has('user_id') && Auth()->user()->tokenCan(RoleAndPermissionHelper::PARTIAL_ACCESS_TASK_API_ABILITY)){
+            if (Request::has('user_id') && Auth()->user()->tokenCan(RoleAndPermissionHelper::PARTIAL_ACCESS_TASK_API_ABILITY)) {
                 return response()->json([
                     'error' =>  'Team Member can not assign tasks to anyone',
                     'statusCode' => 401,
@@ -70,7 +70,12 @@ class PatchTask extends FormRequest
                 'error' =>  'Unauthorised Action',
                 'statusCode' => 417,
             ], 417);
-        } catch (Exception $e) {
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'error' =>  'Task not found',
+                'statusCode' => 417
+            ], 417);
+        } catch (\Exception $e) {
             return response()->json([
                 'error' =>  $e->getMessage(),
                 'statusCode' => 417

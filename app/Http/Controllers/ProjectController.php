@@ -43,9 +43,24 @@ class ProjectController extends Controller
 
     public function destroy(string $id)
     {
-        $Project = Project::findorFail($id);
-        if ($Project->delete()) {
-            return 'deleted successfully';
+        try {
+            $Project = Project::findorFail($id);
+            if ($Project->delete()) {
+                return response()->json([
+                    'message' => 'Project deleted successfully',
+                    'statusCode' => 201
+                ], 201);
+            }
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'error' =>  'Project not found',
+                'statusCode' => 417
+            ], 417);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' =>  $e->getMessage(),
+                'statusCode' => 417
+            ], 417);
         }
     }
 }

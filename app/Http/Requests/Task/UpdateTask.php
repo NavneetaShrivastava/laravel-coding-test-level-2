@@ -33,7 +33,7 @@ class UpdateTask extends FormRequest
                 Rule::in([ModelTask::NOT_STARTED, ModelTask::IN_PROGRESS, ModelTask::READY_FOR_TEST, ModelTask::COMPLETED]),
             ],
             'project_id' => 'required|exists:projects,id',
-            'user_id'=> ['sometimes','exists:users,id',new ValidateTeamMember],
+            'user_id' => ['sometimes', 'exists:users,id', new ValidateTeamMember],
         ];
     }
 
@@ -41,7 +41,7 @@ class UpdateTask extends FormRequest
     {
         try {
             $task = ModelTask::findOrFail($id);
-            if( Request::has('user_id') && Auth()->user()->tokenCan(RoleAndPermissionHelper::PARTIAL_ACCESS_TASK_API_ABILITY)){
+            if (Request::has('user_id') && Auth()->user()->tokenCan(RoleAndPermissionHelper::PARTIAL_ACCESS_TASK_API_ABILITY)) {
                 return response()->json([
                     'error' =>  'Only Product Owner can do the Task assignment to Team Member',
                     'statusCode' => 401,
@@ -61,7 +61,7 @@ class UpdateTask extends FormRequest
                 ], 201);
             }
 
-            if(Auth()->user()->tokenCan(RoleAndPermissionHelper::ACCESS_ALL_TASK_API_ABILITY)){
+            if (Auth()->user()->tokenCan(RoleAndPermissionHelper::ACCESS_ALL_TASK_API_ABILITY)) {
                 $task->update(Request::except('status'));
                 return response()->json([
                     'message' => 'Task updated successfully, Except Status',
@@ -73,13 +73,16 @@ class UpdateTask extends FormRequest
                 'error' =>  'Unauthorised Action',
                 'statusCode' => 401,
             ], 401);
-        
-        } 
-        catch (\Exception $e) {
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'error' =>  'Task not found',
+                'statusCode' => 417
+            ], 417);
+        } catch (\Exception $e) {
             return response()->json([
                 'error' =>  $e->getMessage(),
-                'statusCode' => 400,
-            ], 400);
+                'statusCode' => 417
+            ], 417);
         }
     }
 }

@@ -42,14 +42,20 @@ class PatchUser extends FormRequest
             if (Request::has('roles')) {
                 $user->syncRoles($this->roles);
             }
+            $user = $user->makeHidden(['roles']);
+            $user->assignedRole = $user->getRoleNames();
             DB::commit();
             return response()->json([
                 'message' => 'User patched successfully',
                 'statusCode' => 201,
                 'data' => $user
             ], 201);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'error' =>  'User not found',
+                'statusCode' => 417
+            ], 417);
         } catch (\Exception $e) {
-            DB::rollback();
             return response()->json([
                 'error' =>  $e->getMessage(),
                 'statusCode' => 417

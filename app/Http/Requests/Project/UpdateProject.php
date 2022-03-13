@@ -39,15 +39,16 @@ class UpdateProject extends FormRequest
                 'statusCode' => 201,
                 'data' => $project
             ], 201);
-        } 
-        catch (\Exception $e) {
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'error' =>  'Project not found',
+                'statusCode' => 417
+            ], 417);
+        } catch (\Exception $e) {
             return response()->json([
                 'error' =>  $e->getMessage(),
                 'statusCode' => 417
             ], 417);
         }
-
-     
     }
-    
 }

@@ -41,9 +41,24 @@ class TaskController extends Controller
 
     public function destroy(string $id)
     {
-        $Task = Task::findorFail($id);
-        if ($Task->delete()) {
-            return 'deleted successfully';
+        try {
+            $Task = Task::findorFail($id);
+            if ($Task->delete()) {
+                return response()->json([
+                    'message' => 'Task deleted successfully',
+                    'statusCode' => 201
+                ], 201);
+            }
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'error' =>  'Task not found',
+                'statusCode' => 417
+            ], 417);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' =>  $e->getMessage(),
+                'statusCode' => 417
+            ], 417);
         }
     }
 }

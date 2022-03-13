@@ -41,13 +41,24 @@ class UserController extends Controller
 
     public function destroy(string $id)
     {
-        $user = User::findorFail($id);
-        if ($user->delete()) {
-            return 'deleted successfully';
+        try {
+            $user = User::findorFail($id);
+            if ($user->delete()) {
+                return response()->json([
+                    'message' => 'User deleted successfully',
+                    'statusCode' => 201
+                ], 201);
+            }
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'error' =>  'User not found',
+                'statusCode' => 417
+            ], 417);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' =>  $e->getMessage(),
+                'statusCode' => 417
+            ], 417);
         }
-        return response()->json([
-            'message' => 'User deleted successfully',
-            'statusCode' => 201
-        ], 201);
     }
 }
