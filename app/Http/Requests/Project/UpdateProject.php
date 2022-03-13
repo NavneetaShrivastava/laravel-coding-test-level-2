@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Project;
 
 use App\Models\Project as ModelProject;
-use Exception;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -33,14 +32,23 @@ class UpdateProject extends FormRequest
     public function persist($id)
     {
         try {
-            $Project = ModelProject::findOrFail($id);
-            $Project->update(Request::all());
-            return $Project;
-        } catch (Exception $e) {
-           return "Project Not Found";
+            $project = ModelProject::findOrFail($id);
+            $project->update(Request::all());
+            return response()->json([
+                'message' => 'Project updated successfully',
+                'statusCode' => 201,
+                'data' => $project
+            ], 201);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'error' =>  'Project not found',
+                'statusCode' => 417
+            ], 417);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' =>  $e->getMessage(),
+                'statusCode' => 417
+            ], 417);
         }
-
-     
     }
-    
 }

@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Project\UpdateProject;
 use App\Http\Requests\Project\StoreProject;
 use App\Http\Requests\Project\PatchProject;
+use App\Http\Requests\Project\IndexProject;
 use App\Models\Project;
 use Exception;
 
 class ProjectController extends Controller
 {
-    public function index()
+    public function index(IndexProject $form)
     {
-        return Project::orderBy('created_at', 'asc')->get(); 
+        return response()->json($form->data());
     }
 
     public function store(StoreProject $form)
@@ -26,27 +27,40 @@ class ProjectController extends Controller
             $project = Project::findorFail($id);
             return $project;
         } catch (Exception $e) {
-           return 'Project Not Found';
+            return 'Project Not Found';
         }
     }
 
-    public function update(string $id, UpdateProject $form )
+    public function update(string $id, UpdateProject $form)
     {
-        $form->persist($id);
-        return 'Project updated Successfully';
+        return response()->json($form->persist($id));
     }
 
-    public function patch(string $id, PatchProject $form )
+    public function patch(string $id, PatchProject $form)
     {
-        $form->persist($id);
-        return 'Project patched Successfully';
+        return response()->json($form->persist($id));
     }
 
     public function destroy(string $id)
     {
-       $Project = Project::findorFail($id); 
-        if($Project->delete()){ 
-            return 'deleted successfully'; 
+        try {
+            $Project = Project::findorFail($id);
+            if ($Project->delete()) {
+                return response()->json([
+                    'message' => 'Project deleted successfully',
+                    'statusCode' => 201
+                ], 201);
+            }
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'error' =>  'Project not found',
+                'statusCode' => 417
+            ], 417);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' =>  $e->getMessage(),
+                'statusCode' => 417
+            ], 417);
         }
     }
 }
