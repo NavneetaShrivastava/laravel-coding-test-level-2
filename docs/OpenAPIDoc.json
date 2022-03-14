@@ -1,0 +1,606 @@
+{
+    "openapi" : "3.0.0",
+    "info" : {
+      "title" : "laravel-coding-test-level-2",
+      "description" : "laravel-coding-test-level-2 docs",
+      "contact" : {
+        "name" : "Navneeta Shrivastava",
+        "email" : "shrivastavanavneeta@gmail.com"
+      },
+      "version" : "1.0.0"
+    },
+    "servers" : [ {
+      "url" : "/"
+    } ],
+    "paths" : {
+      "/users/{user_id}" : {
+        "get" : {
+          "description" : "Use this API to fetch details of a user",
+          "parameters" : [ {
+            "name" : "user_id",
+            "in" : "path",
+            "required" : true,
+            "style" : "simple",
+            "explode" : false,
+            "schema" : {
+              "type" : "string"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Users details listed successfully",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/user"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put" : {
+          "description" : "Use this API to update User",
+          "parameters" : [ {
+            "name" : "user_id",
+            "in" : "path",
+            "required" : true,
+            "style" : "simple",
+            "explode" : false,
+            "schema" : {
+              "type" : "string"
+            }
+          } ],
+          "requestBody" : {
+            "description" : "Structure of a user",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/userRequest"
+                }
+              }
+            },
+            "required" : true
+          },
+          "responses" : {
+            "201" : {
+              "description" : "user updated successfully",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/user"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete" : {
+          "description" : "Use this API to delete User",
+          "parameters" : [ {
+            "name" : "user_id",
+            "in" : "path",
+            "required" : true,
+            "style" : "simple",
+            "explode" : false,
+            "schema" : {
+              "type" : "string"
+            }
+          } ],
+          "responses" : {
+            "201" : {
+              "description" : "user patched successfully"
+            }
+          }
+        },
+        "patch" : {
+          "description" : "Use this API to patch User",
+          "parameters" : [ {
+            "name" : "user_id",
+            "in" : "path",
+            "required" : true,
+            "style" : "simple",
+            "explode" : false,
+            "schema" : {
+              "type" : "string"
+            }
+          } ],
+          "requestBody" : {
+            "description" : "Structure of a user",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/userRequest"
+                }
+              }
+            },
+            "required" : true
+          },
+          "responses" : {
+            "201" : {
+              "description" : "user patched successfully",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/user"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/users" : {
+        "get" : {
+          "description" : "Use this API to fetch details of a user",
+          "responses" : {
+            "200" : {
+              "description" : "Users listed successfully",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/user"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post" : {
+          "description" : "Use this API to create User",
+          "requestBody" : {
+            "description" : "Structure of a user",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/userRequest"
+                }
+              }
+            },
+            "required" : true
+          },
+          "responses" : {
+            "201" : {
+              "description" : "user created successfully",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/user"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/projects/{project_id}" : {
+        "get" : {
+          "description" : "Use this API to fetch details of a Project",
+          "parameters" : [ {
+            "name" : "project_id",
+            "in" : "path",
+            "required" : true,
+            "style" : "simple",
+            "explode" : false,
+            "schema" : {
+              "type" : "string"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Project details listed successfully",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/project"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put" : {
+          "description" : "Use this API to update Project",
+          "parameters" : [ {
+            "name" : "project_id",
+            "in" : "path",
+            "required" : true,
+            "style" : "simple",
+            "explode" : false,
+            "schema" : {
+              "type" : "string"
+            }
+          } ],
+          "requestBody" : {
+            "description" : "Structure of a Project",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/projectRequest"
+                }
+              }
+            },
+            "required" : true
+          },
+          "responses" : {
+            "201" : {
+              "description" : "Project updated successfully",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/project"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete" : {
+          "description" : "Use this API to delete Project",
+          "parameters" : [ {
+            "name" : "project_id",
+            "in" : "path",
+            "required" : true,
+            "style" : "simple",
+            "explode" : false,
+            "schema" : {
+              "type" : "string"
+            }
+          } ],
+          "responses" : {
+            "201" : {
+              "description" : "Project patched successfully"
+            }
+          }
+        },
+        "patch" : {
+          "description" : "Use this API to patch Project",
+          "parameters" : [ {
+            "name" : "project_id",
+            "in" : "path",
+            "required" : true,
+            "style" : "simple",
+            "explode" : false,
+            "schema" : {
+              "type" : "string"
+            }
+          } ],
+          "requestBody" : {
+            "description" : "Structure of a Project",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/projectRequest"
+                }
+              }
+            },
+            "required" : true
+          },
+          "responses" : {
+            "201" : {
+              "description" : "Project patched successfully",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/project"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/projects" : {
+        "get" : {
+          "description" : "Use this API to fetch details of a Project",
+          "responses" : {
+            "200" : {
+              "description" : "Project listed successfully",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/project"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post" : {
+          "description" : "Use this API to create Project",
+          "requestBody" : {
+            "description" : "Structure of a Project",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/projectRequest"
+                }
+              }
+            },
+            "required" : true
+          },
+          "responses" : {
+            "201" : {
+              "description" : "Project created successfully",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/project"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/tasks/{task_id}" : {
+        "get" : {
+          "description" : "Use this API to fetch details of a Task",
+          "parameters" : [ {
+            "name" : "task_id",
+            "in" : "path",
+            "required" : true,
+            "style" : "simple",
+            "explode" : false,
+            "schema" : {
+              "type" : "string"
+            }
+          } ],
+          "responses" : {
+            "200" : {
+              "description" : "Task details listed successfully",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/task"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put" : {
+          "description" : "Use this API to update Task",
+          "parameters" : [ {
+            "name" : "task_id",
+            "in" : "path",
+            "required" : true,
+            "style" : "simple",
+            "explode" : false,
+            "schema" : {
+              "type" : "string"
+            }
+          } ],
+          "requestBody" : {
+            "description" : "Structure of a user",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/taskRequest"
+                }
+              }
+            },
+            "required" : true
+          },
+          "responses" : {
+            "201" : {
+              "description" : "Task updated successfully",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/task"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete" : {
+          "description" : "Use this API to delete Task",
+          "parameters" : [ {
+            "name" : "task_id",
+            "in" : "path",
+            "required" : true,
+            "style" : "simple",
+            "explode" : false,
+            "schema" : {
+              "type" : "string"
+            }
+          } ],
+          "responses" : {
+            "201" : {
+              "description" : "task patched successfully"
+            }
+          }
+        },
+        "patch" : {
+          "description" : "Use this API to patch Task",
+          "parameters" : [ {
+            "name" : "task_id",
+            "in" : "path",
+            "required" : true,
+            "style" : "simple",
+            "explode" : false,
+            "schema" : {
+              "type" : "string"
+            }
+          } ],
+          "requestBody" : {
+            "description" : "Structure of a Task",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/task"
+                }
+              }
+            },
+            "required" : true
+          },
+          "responses" : {
+            "201" : {
+              "description" : "task patched successfully",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/task"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/tasks" : {
+        "get" : {
+          "description" : "Use this API to fetch all Tasks",
+          "responses" : {
+            "200" : {
+              "description" : "task listed successfully",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/task"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post" : {
+          "description" : "Use this API to create Task",
+          "requestBody" : {
+            "description" : "Structure of a user",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/taskRequest"
+                }
+              }
+            },
+            "required" : true
+          },
+          "responses" : {
+            "201" : {
+              "description" : "task created successfully",
+              "content" : {
+                "application/json" : {
+                  "schema" : {
+                    "$ref" : "#/components/schemas/task"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components" : {
+      "schemas" : {
+        "user" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string"
+            },
+            "username" : {
+              "type" : "string"
+            },
+            "password" : {
+              "type" : "string"
+            },
+            "created_at" : {
+              "type" : "string"
+            },
+            "updated_at" : {
+              "type" : "string"
+            },
+            "assignedRole" : {
+              "type" : "string"
+            }
+          }
+        },
+        "task" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string"
+            },
+            "title" : {
+              "type" : "string"
+            },
+            "status" : {
+              "type" : "string"
+            },
+            "project_id" : {
+              "type" : "string"
+            },
+            "user_id" : {
+              "type" : "string"
+            },
+            "created_at" : {
+              "type" : "string"
+            },
+            "updated_at" : {
+              "type" : "string"
+            }
+          }
+        },
+        "project" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "string"
+            },
+            "name" : {
+              "type" : "string"
+            },
+            "created_at" : {
+              "type" : "string"
+            },
+            "updated_at" : {
+              "type" : "string"
+            }
+          }
+        },
+        "userRequest" : {
+          "type" : "object",
+          "properties" : {
+            "username" : {
+              "type" : "string"
+            },
+            "password" : {
+              "type" : "string"
+            },
+            "roles" : {
+              "type" : "string"
+            }
+          }
+        },
+        "taskRequest" : {
+          "type" : "object",
+          "properties" : {
+            "title" : {
+              "type" : "string"
+            },
+            "status" : {
+              "type" : "string"
+            },
+            "project_id" : {
+              "type" : "string"
+            },
+            "user_id" : {
+              "type" : "string"
+            }
+          }
+        },
+        "projectRequest" : {
+          "type" : "object",
+          "properties" : {
+            "name" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
+    }
+  }
